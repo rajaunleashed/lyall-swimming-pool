@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBrands extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBrands extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->text('logo')->nullable();
+            $table->foreignId('customer_id')->nullable()->constrained()->onDelete('SET NULL');
+            $table->string('customer_name')->nullable();
+            $table->boolean('paid_status')->default(1);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateBrands extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('sales');
     }
 }

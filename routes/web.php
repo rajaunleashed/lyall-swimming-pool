@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\SaleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +14,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('/admin');
 });
 
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+    Route::get('/load-relations', [\App\Http\Controllers\DataController::class, 'loadSalesRelations']);
+    Route::prefix('sales')->group(function() {
+        Route::post('create', [SaleController::class, 'add']);
+        Route::get('{id}/get', [SaleController::class, 'getSaleByID']);
+        Route::post('edit/{id}', [SaleController::class, 'updateByID']);
+    });
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
