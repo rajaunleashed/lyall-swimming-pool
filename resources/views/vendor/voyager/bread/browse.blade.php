@@ -253,7 +253,11 @@
                                         <td class="no-sort no-click bread-actions">
                                             @foreach($actions as $action)
                                                 @if (!method_exists($action, 'massAction'))
+                                                    @if($data instanceof \App\Models\Sale)
+                                                        @include('voyager::bread.partials.invoice-actions', ['action' => $action])
+                                                    @else
                                                     @include('voyager::bread.partials.actions', ['action' => $action])
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </td>

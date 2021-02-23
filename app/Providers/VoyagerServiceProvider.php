@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Facades\HelperFacade;
 use App\Models\Purchase;
 use App\Models\Sale;
 use App\Observers\PurchaseObserver;
 use App\Observers\SaleObserver;
+use App\Utilities\Helper;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use TCG\Voyager\Facades\Voyager;
 
 class VoyagerServiceProvider extends ServiceProvider
 {
@@ -17,7 +21,9 @@ class VoyagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        App::bind('helper',function() {
+            return new Helper();
+        });
     }
 
     /**
@@ -29,5 +35,7 @@ class VoyagerServiceProvider extends ServiceProvider
     {
        Purchase::observe(PurchaseObserver::class);
        Sale::observe(SaleObserver::class);
+       Voyager::addAction(\App\Actions\InvoiceAction::class);
+
     }
 }

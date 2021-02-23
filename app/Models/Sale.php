@@ -14,7 +14,8 @@ class Sale extends Model
     ];
 
     protected $with = [
-      'saleProducts'
+        'saleProducts',
+        'customer'
     ];
 
     public function getProductsAttribute() {
@@ -24,6 +25,11 @@ class Sale extends Model
     public function saleProducts()
     {
         return $this->hasMany(SaleProduct::class, 'sale_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SaleController;
+use \App\Http\Controllers\InvoiceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +27,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('create', [SaleController::class, 'add']);
         Route::get('{id}/get', [SaleController::class, 'getSaleByID']);
         Route::post('edit/{id}', [SaleController::class, 'updateByID']);
+        Route::get('{id}/invoice', [InvoiceController::class, 'show'])->name('sale.invoice');
+        Route::post('invoice/update', [InvoiceController::class, 'updateInvoice'])->name('sales.invoice');
+        Route::get('invoice/{id}/download', [InvoiceController::class, 'downloadInvoice'])->name('sales.invoice.download');
+        Route::get('invoice/{id}/print', [InvoiceController::class, 'printInvoice'])->name('sales.invoice.print');
     });
 });
 
