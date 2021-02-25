@@ -37,6 +37,13 @@ table#dataTable td img {
 .error {
     color: #fb7070;
 }
+.panel-body .select2-selection {
+    border: 0 !important
+}
+
+.help-block {
+    position:absolute;
+}
 
 ul.radio li {
     display: inline-block;
@@ -448,7 +455,7 @@ td.label-field {
 .mb-0 { margin-bottom: 0 !important; }
 .pb-0 { padding-bottom: 0 !important; }
 .m-5 { margin:5px !important;}
-.select2-container { border: 1px solid #cec9c9}
+.select2-container { border: 1px solid #e4eaec}
 .select2-results__group { display: none !important; }
 .tooltip{z-index: 9999;}
 .table thead tr th{vertical-align: top;}
@@ -509,3 +516,37 @@ td.label-field {
 .app-footer {
     display: none !important;
 }
+
+.badge-amount {
+    display: block;
+    margin-top: 1px;
+    border-radius: 0;
+}
+
+.clear {
+    clear:both
+}
+
+ul.customers-list {
+    position: absolute;
+    z-index: 99;
+    padding: 0;
+    list-style: none;
+    top: 36px;
+    width: 100%;
+    background: white;
+    box-shadow: 0 0 3px #ccc;
+    display: none;
+}
+
+ul.customers-list li {
+    border-bottom: 1px solid #eee;
+    padding: 5px 10px;
+}
+ul.customers-list li:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+
+

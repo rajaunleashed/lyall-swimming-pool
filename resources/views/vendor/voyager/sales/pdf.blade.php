@@ -3,6 +3,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Invoice #{{ $invoice->id }}</title>
     <style>
+        body {
+            font-family: Calibri, sans-serif;
+        }
         .item-table {
             padding-top: 20px;
             border: 1px;
@@ -43,7 +46,7 @@
         $link = json_decode(setting('admin.logo'));
     @endphp
     <div style="width: 100px; margin: 0 auto;">
-        <img style="width: 100%" src="/storage/{{ $link[0]->download_link }}" />
+        <img style="width: 100%" src="{{ public_path('storage/' . $link[0]->download_link) }}" />
     </div>
 @endif
 <h1 style="text-align: center;font-size:50px;margin-top: 0; margin-bottom:0;padding-bottom:0">{{ setting('admin.title') }}</h1>

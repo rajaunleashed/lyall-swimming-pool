@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleRequest;
 use App\Models\Customer;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
@@ -103,5 +104,19 @@ class SaleController extends VoyagerBaseController
             return Helper::errorResponse(__($exception->getMessage()));
         }
     }
+
+    public function getPaymentDetail($saleId) {
+        $data['totalAmount'] = $this->saleProductsRepository->totalAmount($saleId);
+        $payment = Payment::whereSaleId($saleId)->get();
+        if($payment) {
+            $data['totalPayment'] = $payment->sum('amount');
+            $data['remainingAmount'] = $data['totalAmount'] - $data['totalPayment'];
+        } else {
+            $data['totalPayment'] = 0;
+            $data['remainingAmount'] = $data['totalAmount'];
+        }
+        return Helper::successResponse(__('Sale Amount'), $data);
+    }
+
 
 }

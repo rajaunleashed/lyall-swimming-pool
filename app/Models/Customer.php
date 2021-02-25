@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+
+    protected $with = [
+        'route'
+    ];
+
+    public function route() {
+        return $this->belongsTo(Route::class);
+    }
 }

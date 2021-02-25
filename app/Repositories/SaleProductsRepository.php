@@ -65,4 +65,10 @@ class SaleProductsRepository
 
         return $items;
     }
+
+
+    public function totalAmount($id)
+    {
+        return SaleProduct::whereSaleId($id)->sum('total_price');
+    }
 }
