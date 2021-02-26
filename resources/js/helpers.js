@@ -1,6 +1,6 @@
 export function getAvailableStock (product, item, items = [])  {
     if (!product.stock.length) {
-        return false;
+        return true;
     }
 
     let purchasedQuantity = 0;

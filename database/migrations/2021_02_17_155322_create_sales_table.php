@@ -17,7 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->foreignId('customer_id')->nullable()->constrained()->onDelete('SET NULL');
             $table->string('customer_name')->nullable();
-            $table->boolean('paid_status')->default(1);
+//            $table->boolean('paid_status')->default(1);
             $table->text('comments')->nullable();
             $table->timestamps();
         });

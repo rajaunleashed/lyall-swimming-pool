@@ -12,9 +12,9 @@ class Product extends Model
     protected $with = ['stock'];
 
     function stock() {
-        return $this->hasMany(Purchase::class)
-            ->selectRaw('purchases.product_id, SUM(stock_in) as totalStock')
-            ->groupBy('purchases.product_id');
+        return $this->hasMany(MonthlyStock::class)
+            ->selectRaw('monthly_stocks.product_id, SUM(quantity) as totalStock')
+            ->groupBy('monthly_stocks.product_id');
     }
 
     /*
@@ -28,8 +28,8 @@ class Product extends Model
     {
         foreach ($items as $item) {
 
-            $totalAvailStock = Purchase::getAvailableStockProducts($item['product_id']);
-            $totalAvailStock = $totalAvailStock->sum('stock_in');
+            $totalAvailStock = MonthlyStock::getAvailableStockProducts($item['product_id']);
+            $totalAvailStock = $totalAvailStock->sum('quantity');
 
             // Check if it is updating the existing data
             if(isset($item['id'])) {

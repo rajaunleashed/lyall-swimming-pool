@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchasesTable extends Migration
+class CreateMonthlyStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,19 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('monthly_stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable()->constrained()->onDelete('SET NULL');
             $table->string('product_name')->nullable();
             $table->foreignId('supplier_id')->nullable()->constrained()->onDelete('SET NULL');
             $table->string('supplier_name')->nullable();
-            $table->double('price');
+            $table->bigInteger('opening_stock');
             $table->double('stock_in');
+            $table->double('quantity')->default(0);
             $table->bigInteger('stock_out')->default(0);
+            $table->bigInteger('bonus')->nullable()->default(0);
+            $table->bigInteger('expired')->nullable()->default(0);
             $table->date('date')->useCurrent();
-            $table->boolean('paid_status')->comment('0=unpaid,1=paid')->default(1);
             $table->timestamps();
         });
     }
@@ -35,6 +37,6 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('monthly_stocks');
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Facades\HelperFacade;
-use App\Models\Purchase;
+use App\Models\MonthlyStock;
 use App\Models\Sale;
-use App\Observers\PurchaseObserver;
+use App\Observers\MonthlyStockObserver;
 use App\Observers\SaleObserver;
 use App\Utilities\Helper;
 use Illuminate\Support\Facades\App;
@@ -33,9 +33,10 @@ class VoyagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       Purchase::observe(PurchaseObserver::class);
+       MonthlyStock::observe(MonthlyStockObserver::class);
        Sale::observe(SaleObserver::class);
        Voyager::addAction(\App\Actions\InvoiceAction::class);
+       Voyager::addAction(\App\Actions\CloseMonthAction::class);
 
     }
 }

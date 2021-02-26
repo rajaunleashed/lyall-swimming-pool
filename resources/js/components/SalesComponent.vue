@@ -83,19 +83,19 @@
                     </table>
                 </div>
 
-                <div class="col-md-12">
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" v-model="paid_status" v-bind:value="1" v-bind:checked="paid_status"  name="paid_status"> Paid
-                        </label>
-                    </div>
-                    <div class="form-check-inline">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" v-model="paid_status" v-bind:value="0" v-bind:checked="paid_status"  name="paid_status"> Unpaid
-                        </label>
-                    </div>
+<!--                <div class="col-md-12">-->
+<!--                    <div class="form-check-inline">-->
+<!--                        <label class="form-check-label">-->
+<!--                            <input type="radio" class="form-check-input" v-model="paid_status" v-bind:value="1" v-bind:checked="paid_status"  name="paid_status"> Paid-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check-inline">-->
+<!--                        <label class="form-check-label">-->
+<!--                            <input type="radio" class="form-check-input" v-model="paid_status" v-bind:value="0" v-bind:checked="paid_status"  name="paid_status"> Unpaid-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                </div>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary" v-bind:disabled="isSubmitting">
                         {{ isSubmitting ? 'Please Wait...' : 'Submit'}}
@@ -134,7 +134,6 @@
                 existingItems: [],
                 customer_id: '',
                 out_of_stock: false,
-                paid_status: false,
                 isSubmitting: false
             }
         },
@@ -211,7 +210,6 @@
                         if(response.data.status) {
                             this.customer_id = response.data.data.customer_id;
                             this.customer = response.data.data.customer_name;
-                            this.paid_status = response.data.data.paid_status
                             this.items = [];
                             response.data.data.sale_products.forEach(item => {
                                 this.items.push({
@@ -240,7 +238,6 @@
 
                         const params = {
                             customer_id: this.customer_id,
-                            paid_status: this.paid_status,
                             id: this.id,
                             items: this.items
                         }

@@ -14,7 +14,7 @@ class SaleRepository
         $sale = new Sale();
         $sale->customer_id = $request->customer_id;
         $sale->customer_name = Customer::whereId($request->customer_id)->value('name');
-        $sale->paid_status = $request->paid_status;
+//        $sale->paid_status = $request->paid_status;
         $sale->save();
 
         return $sale;
@@ -25,7 +25,6 @@ class SaleRepository
         $sale = Sale::find($id);
         $sale->customer_id = $request->customer_id;
         $sale->customer_name = Customer::whereId($request->customer_id)->value('name');
-        $sale->paid_status = $request->paid_status;
         $sale->save();
 
         return $sale;

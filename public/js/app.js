@@ -2001,7 +2001,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       existingItems: [],
       customer_id: '',
       out_of_stock: false,
-      paid_status: false,
       isSubmitting: false
     };
   },
@@ -2099,7 +2098,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           if (response.data.status) {
             _this5.customer_id = response.data.data.customer_id;
             _this5.customer = response.data.data.customer_name;
-            _this5.paid_status = response.data.data.paid_status;
             _this5.items = [];
             response.data.data.sale_products.forEach(function (item) {
               _this5.items.push({
@@ -2134,7 +2132,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this6.isSubmitting = true;
                     var params = {
                       customer_id: _this6.customer_id,
-                      paid_status: _this6.paid_status,
                       id: _this6.id,
                       items: _this6.items
                     };
@@ -2296,7 +2293,7 @@ function getAvailableStock(product, item) {
   var items = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
   if (!product.stock.length) {
-    return false;
+    return true;
   }
 
   var purchasedQuantity = 0;
@@ -45746,64 +45743,6 @@ var render = function() {
                       ]
                     )
                   : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "form-check-inline" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.paid_status,
-                          expression: "paid_status"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", name: "paid_status" },
-                      domProps: {
-                        value: 1,
-                        checked: _vm.paid_status,
-                        checked: _vm._q(_vm.paid_status, 1)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.paid_status = 1
-                        }
-                      }
-                    }),
-                    _vm._v(" Paid\n                        ")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-check-inline" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.paid_status,
-                          expression: "paid_status"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", name: "paid_status" },
-                      domProps: {
-                        value: 0,
-                        checked: _vm.paid_status,
-                        checked: _vm._q(_vm.paid_status, 0)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.paid_status = 0
-                        }
-                      }
-                    }),
-                    _vm._v(" Unpaid\n                        ")
-                  ])
-                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-12" }, [

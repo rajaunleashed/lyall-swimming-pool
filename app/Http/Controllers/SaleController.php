@@ -3,22 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleRequest;
-use App\Models\Customer;
+use App\Models\MonthlyStock;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Models\Purchase;
 use App\Models\Sale;
 use App\Repositories\SaleProductsRepository;
 use App\Repositories\SaleRepository;
 use App\Utilities\Helper;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use TCG\Voyager\Database\Schema\SchemaManager;
-use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
 class SaleController extends VoyagerBaseController
@@ -52,7 +44,7 @@ class SaleController extends VoyagerBaseController
 
             $sale = $this->saleRepository->store($request);
             $this->saleProductsRepository->store($request, $sale->id, function($items) {
-                Purchase::resolveStock($items);
+                MonthlyStock::resolveStock($items);
             });
 
             DB::commit();
@@ -90,7 +82,7 @@ class SaleController extends VoyagerBaseController
             $this->saleProductsRepository->update($request, $sale->id, function($response) {
                 $items = $response['items'];
                 $previousItems = $response['previousItems'];
-                Purchase::resolveStock($items, $previousItems);
+                MonthlyStock::resolveStock($items, $previousItems);
             });
 
             DB::commit();

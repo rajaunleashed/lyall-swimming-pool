@@ -5,7 +5,6 @@ namespace App\Repositories;
 
 
 use App\Models\Product;
-use App\Models\Purchase;
 use App\Models\SaleProduct;
 
 class SaleProductsRepository

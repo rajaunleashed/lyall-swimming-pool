@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SaleController;
 use \App\Http\Controllers\InvoiceController;
 use \App\Http\Controllers\DataController;
+use \App\Http\Controllers\StockController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,7 +24,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    Route::get('/load-relations', [\App\Http\Controllers\DataController::class, 'loadSalesRelations']);
+    Route::get('/load-relations', [DataController::class, 'loadSalesRelations']);
     Route::prefix('sales')->group(function() {
         Route::post('create', [SaleController::class, 'add']);
         Route::get('{saleId}/get/payment', [SaleController::class, 'getPaymentDetail']);
@@ -34,6 +35,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('invoice/{id}/download', [InvoiceController::class, 'downloadInvoice'])->name('sales.invoice.download');
         Route::get('invoice/{id}/print', [InvoiceController::class, 'printInvoice'])->name('sales.invoice.print');
         Route::get('invoice/{id}/print', [InvoiceController::class, 'printInvoice'])->name('sales.invoice.print');
+    });
+
+    Route::prefix('stock')->group(function() {
+        Route::post('close-month/{month}', [StockController::class, 'closeMonth']);
     });
 });
 

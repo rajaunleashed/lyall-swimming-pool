@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class MonthlyStock extends Model
 {
     use HasFactory;
 
@@ -32,7 +32,7 @@ class Purchase extends Model
 
     public static function getAvailableStockProducts($product_id)
     {
-        return Purchase::where('quantity', '>', 0)->whereProductId($product_id)->get();
+        return self::where('quantity', '>', 0)->whereProductId($product_id)->get();
     }
 
 
@@ -69,9 +69,9 @@ class Purchase extends Model
                 $stock_out = $stock_out + $quantity;
                 $continue = false;
             }
-            Purchase::whereId($item->id)->update([
-               'quantity' => $stock_in,
-               'stock_out' => $stock_out
+            self::whereId($item->id)->update([
+                'quantity' => $stock_in,
+                'stock_out' => $stock_out
             ]);
 
             if (!$continue) {

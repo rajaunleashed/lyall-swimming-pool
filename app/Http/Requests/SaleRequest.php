@@ -25,11 +25,9 @@ class SaleRequest extends FormRequest
     {
         return [
             'customer_id' => 'required',
-            'paid_status' => 'required|boolean',
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required',
-//            'items.*.discount' => 'required'
         ];
     }
 }

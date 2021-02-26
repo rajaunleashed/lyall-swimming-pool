@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Purchase;
+use App\Models\MonthlyStock;
 use App\Models\Sale;
 use App\Models\SaleProduct;
 
@@ -40,10 +40,10 @@ class SaleObserver
     {
         $saleProducts = SaleProduct::whereSaleId($sale->id)->get();
         foreach($saleProducts as $saleProduct) {
-            $purchaseProduct = Purchase::whereProductId($saleProduct->product_id)->latest()->first();
+            $purchaseProduct = MonthlyStock::whereProductId($saleProduct->product_id)->latest()->first();
             $stock_out = $purchaseProduct->stock_out - $saleProduct->quantity;
-            Purchase::whereId($purchaseProduct->id)->update([
-               'stock_in' => $purchaseProduct->stock_in + $saleProduct->quantity,
+            MonthlyStock::whereId($purchaseProduct->id)->update([
+                'quantity' => $purchaseProduct->quantity + $saleProduct->quantity,
                 'stock_out' => $stock_out > 0 ? $stock_out : 0
             ]);
         }
