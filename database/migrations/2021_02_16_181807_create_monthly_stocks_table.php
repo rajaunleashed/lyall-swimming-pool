@@ -20,12 +20,13 @@ class CreateMonthlyStocksTable extends Migration
             $table->foreignId('supplier_id')->nullable()->constrained()->onDelete('SET NULL');
             $table->string('supplier_name')->nullable();
             $table->bigInteger('opening_stock');
-            $table->double('stock_in');
-            $table->double('quantity')->default(0);
+            $table->double('stock_in', 18, 2);
+            $table->bigInteger('quantity')->default(0);
             $table->bigInteger('stock_out')->default(0);
             $table->bigInteger('bonus')->nullable()->default(0);
             $table->bigInteger('expired')->nullable()->default(0);
             $table->date('date')->useCurrent();
+            $table->boolean('is_month_closed')->default(0);
             $table->timestamps();
         });
     }

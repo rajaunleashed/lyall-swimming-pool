@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utilities\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,12 @@ class Product extends Model
     protected $with = ['stock'];
 
     function stock() {
+        $monthYear = Helper::getMonthYearFromDate();
         return $this->hasMany(MonthlyStock::class)
             ->selectRaw('monthly_stocks.product_id, SUM(quantity) as totalStock')
+            ->whereYear('date', $monthYear['year'])
+            ->whereMonth('date', $monthYear['month'])
+            ->whereIsMonthClosed(0)
             ->groupBy('monthly_stocks.product_id');
     }
 

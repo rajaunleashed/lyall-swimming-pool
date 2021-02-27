@@ -549,7 +549,4 @@ ul.customers-list li:hover {
 }
 
 
-.row>[class*=col-] {
-    margin-bottom: 0;
-}
 

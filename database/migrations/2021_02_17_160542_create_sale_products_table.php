@@ -17,10 +17,10 @@ class CreateSaleProductsTable extends Migration
             $table->id();
             $table->foreignId('sale_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->double('price')->default(0);
-            $table->double('discount')->default(0);
+            $table->double('price', 18,2)->default(0);
+            $table->double('discount', 18, 2)->default(0);
             $table->bigInteger('quantity')->default(1);
-            $table->double('total_price')->default(1);
+            $table->double('total_price', 18, 2)->default(1);
             $table->timestamps();
         });
     }

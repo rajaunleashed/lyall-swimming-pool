@@ -16,8 +16,8 @@ class CreateItems extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('purchased_price')->default(0);
-            $table->double('trade_price')->default(0)->comment('Trade Price');
+            $table->double('purchased_price', 18, 2)->default(0);
+            $table->double('trade_price', 18, 2)->default(0)->comment('Trade Price');
             $table->unsignedBigInteger('group_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->timestamps();

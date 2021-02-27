@@ -26,7 +26,7 @@ class MonthlyStockObserver
             $monthlyStock->supplier_name = $supplier->name;
         }
 
-        $monthlyStock->quantity = $monthlyStock->opening_stock + $monthlyStock->stock_in;
+        $monthlyStock->quantity = ($monthlyStock->opening_stock + $monthlyStock->stock_in) - $monthlyStock->stock_out - $monthlyStock->expired;
 
     }
 

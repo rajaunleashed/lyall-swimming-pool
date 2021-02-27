@@ -191,7 +191,7 @@ return [
     ],
 
     'additional_js' => [
-        //'js/custom.js',
+        'js/custom.js',
         'admin-assets/js/plugins/jquery-validations/jquery.validate.min.js',
     ],
 

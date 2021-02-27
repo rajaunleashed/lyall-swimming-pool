@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MonthlyStock;
+use App\Utilities\Helper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
@@ -96,10 +97,9 @@ class StockController extends VoyagerBaseController
                 $query->where($search->key, $search_filter, $search_value);
             }
 
-            $m = Carbon::parse($month)->month;
-            $y = Carbon::parse($month)->year;
-            $query->whereMonth('date', $m);
-            $query->whereYear('date', $y);
+            $monthYear = Helper::getMonthYearFromDate($month);
+            $query->whereMonth('date', $monthYear['month']);
+            $query->whereYear('date', $monthYear['year']);
 
 
             if ($orderBy && in_array($orderBy, $dataType->fields())) {

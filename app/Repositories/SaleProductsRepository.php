@@ -57,7 +57,9 @@ class SaleProductsRepository
                 'price' => $product->trade_price,
                 'discount' => $item['discount'] ?? 0,
                 'quantity' => $item['quantity'],
-                'total_price' => $item['quantity'] * $product->trade_price - $item['discount']
+                'total_price' => $item['quantity'] * $product->trade_price - $item['discount'],
+                'created_at' => now(),
+                'updated_at' => now()
             ];
             $items[] = $item;
         }

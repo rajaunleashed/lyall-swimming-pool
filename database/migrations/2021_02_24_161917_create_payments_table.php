@@ -15,8 +15,8 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sale_id')->constrained()->onDelete('No Action');
-            $table->double('amount')->default(0)->comment('Can be partial');
+            $table->foreignId('sale_id')->constrained()->onDelete('NO ACTION');
+            $table->double('amount', 18, 2)->default(0)->comment('Can be partial');
             $table->foreignId('payment_source_id')->nullable()->constrained()->onDelete('SET NULL');
             $table->string('payment_source')->nullable();
             $table->string('receipt_no')->nullable();

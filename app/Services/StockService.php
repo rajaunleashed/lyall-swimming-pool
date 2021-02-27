@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\MonthlyStock;
+use App\Utilities\Helper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -20,10 +21,8 @@ class StockService
 
     public static function closeMonth($month) {
         try {
-            $m = Carbon::parse($month)->month;
-            $y = Carbon::parse($month)->year;
-
-            $stockQuery = MonthlyStock::whereYear('date', $y)->whereMonth('date', $m)->whereIsMonthClosed(0);
+            $monthYear = Helper::getMonthYearFromDate($month);
+            $stockQuery = MonthlyStock::whereYear('date', $monthYear['year'])->whereMonth('date', $monthYear['month'])->whereIsMonthClosed(0);
             $monthlyStocks = $stockQuery->get();
             if(count($monthlyStocks)) {
                 DB::beginTransaction();

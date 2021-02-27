@@ -4,6 +4,7 @@
 namespace App\Utilities;
 
 
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class Helper
@@ -43,5 +44,26 @@ class Helper
     public static function formatCurrency($value)
     {
         return setting('admin.currency') . ' ' . $value;
+    }
+
+    /* Get Month & Year
+     * @handler
+     * @param $month string
+     * @return array
+     * */
+
+    public static function getMonthYearFromDate($month = null) {
+
+        if (is_null($month)) {
+            $month = now()->toDateString();
+        }
+
+        $m = Carbon::parse($month)->month;
+        $y = Carbon::parse($month)->year;
+
+        return [
+            'month' => $m,
+            'year'  => $y
+        ];
     }
 }
