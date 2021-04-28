@@ -40,6 +40,7 @@ class ReportController extends Controller
         $monthYear = Helper::getMonthYearFromDate($month);
 
         $stock = $this->stockRepository->getMonthlyStockReport($monthYear);
+
         $months = MonthlyStock::select('date')->distinct()->pluck('date');
         $stock = $stock->groupBy('group');
 
