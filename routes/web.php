@@ -48,3 +48,24 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+Route::get('points', function() {
+    $data = \DB::table('point_data')->whereLanguage('en')->get();
+    foreach($data as $point_data) {
+        $transliterator = Transliterator::createFromRules(':: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', Transliterator::FORWARD);
+        \DB::table('point_data')->where('id', $point_data->id)->update([
+          'clinical_application' => strip_tags($transliterator->transliterate($point_data->clinical_application)),
+          'combinations' => strip_tags($transliterator->transliterate($point_data->combinations)),
+          'text' => strip_tags($transliterator->transliterate($point_data->text)),
+          'location' => strip_tags($transliterator->transliterate($point_data->location)),
+          'needling' => strip_tags($transliterator->transliterate($point_data->needling)),
+          'actions' => strip_tags($transliterator->transliterate($point_data->actions)),
+          'indications' => strip_tags($transliterator->transliterate($point_data->indications)),
+          'commentary' => strip_tags($transliterator->transliterate($point_data->commentary)),
+          'location_note' => strip_tags($transliterator->transliterate($point_data->location_note)),
+          'classification' => strip_tags($transliterator->transliterate($point_data->classification))
+        ]);
+    }
+
+    $combinations = \DB::table('point_data')->whereId('3')->get();
+    return $combinations;
+});
