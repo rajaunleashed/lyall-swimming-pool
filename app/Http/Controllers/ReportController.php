@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
 use App\Models\MonthlyStock;
+use App\Models\Ticket;
 use App\Repositories\StockRepository;
 use App\Utilities\Helper;
 use Illuminate\Http\Request;
@@ -10,44 +12,33 @@ use TCG\Voyager\Facades\Voyager;
 
 class ReportController extends Controller
 {
-    protected $stockRepository;
 
-    public function __construct(StockRepository $stockRepository)
-    {
-        $this->stockRepository = $stockRepository;
-    }
+    public function expenses() {
 
-    public function stockSale($month = null) {
+        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $years = array_combine(range(date("Y"), 1910), range(date("Y"), 1910));
 
-        if (is_null($month)) {
-            $month = now()->startOfMonth()->toDateString();
-            return redirect()->to("admin/reports/stock-sale/$month");
+        $expenses = Expense::all();
+        $total = $expenses->sum('amount');
+        if (\request()->has('month') && \request()->has('year')) {
+            $expenses = Expense::whereExpenseMonth(\request()->get('month'))->whereExpenseYear(\request()->get('year'))->get();
+            $total = $expenses->sum('amount');
         }
 
-        $data = $this->getStockSaleReport($month);
-        return view('voyager::reports.stock-sale', $data);
+        return view('voyager::reports.expenses', compact('months', 'years', 'expenses', 'total'));
     }
 
-    public function printStockSale($month = null)
-    {
-        $data = $this->getStockSaleReport($month);
-        return view('voyager::reports.stock-sale-print', $data);
+    public function printExpenses() {
+
+        $expenses = Expense::all();
+        $total = $expenses->sum('amount');
+        if (\request()->has('month') && \request()->has('year')) {
+            $expenses = Expense::whereExpenseMonth(\request()->get('month'))->whereExpenseYear(\request()->get('year'))->get();
+            $total = $expenses->sum('amount');
+        }
+
+        return view('voyager::reports.expenses-print', compact('expenses', 'total'));
+
     }
 
-    private function getStockSaleReport($month)
-    {
-
-        $monthYear = Helper::getMonthYearFromDate($month);
-
-        $stock = $this->stockRepository->getMonthlyStockReport($monthYear);
-
-        $months = MonthlyStock::select('date')->distinct()->pluck('date');
-        $stock = $stock->groupBy('group');
-
-        return [
-            'stock'  => $stock,
-            'months' => $months,
-            'month'  => $month
-        ];
-    }
 }

@@ -33,10 +33,7 @@ class VoyagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       MonthlyStock::observe(MonthlyStockObserver::class);
-       Sale::observe(SaleObserver::class);
-       Voyager::addAction(\App\Actions\InvoiceAction::class);
-       Voyager::addAction(\App\Actions\CloseMonthAction::class);
+       Voyager::addAction(\App\Actions\PrintAction::class);
 
     }
 }
