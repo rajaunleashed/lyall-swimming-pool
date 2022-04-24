@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('voyager.dashboard');
     Route::get('/tickets/print/{id}', [\App\Http\Controllers\TicketController::class, 'printTicket'])
         ->name('print.ticket');
 

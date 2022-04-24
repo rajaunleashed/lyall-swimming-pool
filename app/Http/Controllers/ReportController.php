@@ -41,4 +41,33 @@ class ReportController extends Controller
 
     }
 
+
+
+
+    public function sales() {
+
+        $sales = Ticket::all();
+        $total = $sales->sum('amount');
+        if (\request()->has('date') && \request()->filled('date')) {
+            $sales = Ticket::whereDate('created_at', \request()->get('date'))->get();
+            $total = $sales->sum('amount');
+        }
+
+        return view('voyager::reports.sales.sales', compact('sales', 'total'));
+    }
+
+    public function printSales() {
+
+        $sales = Ticket::all();
+        $total = $sales->sum('amount');
+        if (\request()->has('date') ) {
+            $sales = Ticket::whereDate('created_at', \request()->get('date'))->get();
+            $total = $sales->sum('amount');
+        }
+
+
+        return view('voyager::reports.sales.sales-print', compact('sales', 'total'));
+
+    }
+
 }
